@@ -1,54 +1,76 @@
-# React + TypeScript + Vite
+# Testes Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Repositório criado para praticar meus conhecimentos em testes no front-end.
 
-Currently, two official plugins are available:
+## Ferramentas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para esses testes utilizei o **Vitest** e o **Test Library**
 
-## Expanding the ESLint configuration
+## Configurando ambiente
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Precisamos inicialmente instalar as bibliotecas:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Vitest
+
+Essa é a biblioteca que utilizamos para testar nossas funções Typescript.
+
+```bash
+npm i vitest @types/jest -D
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Adicionar um script no meu package.json
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```json
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
+"script": {
+  "test": "vitest"
+}
+```
+
+Dentro do meu vite.config.ts tenho que criar um novo campo e adicionar uma linha no topo do arquivo
+
+```typescript
+/// <reference types="vitest" />
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
   },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
+});
+```
+
+### Test Library e JSDOM
+
+Essas biblioteca utilizamos para renderizar nossos componentes.
+
+```bash
+npm install -D @testing-library/react @testing-library/dom @types/react @types/react-dom @testing-library/jest-dom jsdom
+```
+
+Criamos um arquivo **setupTest.ts** pra executar um script de "limpeza" que será executado sempre ao final de um teste para não interferir um no outro.
+
+```typescript
+import { afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom/vitest";
+
+afterEach(() => {
+  cleanup();
+});
+```
+
+Agora eu preciso configurar mais uma propriedade no meu **vite.config.ts**.
+
+```typescript
+/// <reference types="vitest" />
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./src/setupTest.ts",
   },
-})
+});
 ```
