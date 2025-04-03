@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Form from "./components/Form";
+import Button from "./components/Button";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [list, setList] = useState<string[]>([]);
 
   return (
-    <>
+    <div className="flex flex-col w-92 mx-auto mt-20 gap-10">
+      <Form list={list} setList={setList} />
+
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h2 className="text-center mb-2 font-bold text-2xl">Lista de items</h2>
+        {list.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {list.map((task, index) => (
+              <li
+                key={index}
+                className="border-2 border-black p-2 px-5 flex justify-between items-center"
+              >
+                {task}
+
+                <Button
+                  type="button"
+                  onClick={() => setList(list.filter((_, pos) => pos != index))}
+                >
+                  X
+                </Button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-zinc-400 text-center">
+            Nenhum item adicionado ainda.
+          </p>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
