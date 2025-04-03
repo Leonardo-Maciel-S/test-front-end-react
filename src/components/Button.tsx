@@ -9,7 +9,7 @@ const Button = ({ children, type, ...rest }: ButtonProps) => {
     <button
       {...rest}
       type={type}
-      className="py-2 px-3 bg-blue-800 text-zinc-50 rounded-2xl cursor-pointer"
+      className="py-2 px-3 bg-blue-800 text-zinc-50 rounded-2xl cursor-pointer flex justify-center items-center"
     >
       {children}
     </button>

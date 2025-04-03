@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 import Button from "./Button";
+import { IToDoItem } from "./Item";
 
 interface FormProps {
-  setList: React.Dispatch<React.SetStateAction<string[]>>;
-  list: string[];
+  setList: React.Dispatch<React.SetStateAction<IToDoItem[]>>;
+  list: IToDoItem[];
 }
 
 const Form = ({ setList, list }: FormProps) => {
@@ -14,7 +15,19 @@ const Form = ({ setList, list }: FormProps) => {
 
     if (!text) return;
 
-    setList([...list, text]);
+    if (list.find((item) => item.title == text)) {
+      alert("Esse item já existe");
+      return;
+    }
+
+    const data: IToDoItem = {
+      id: `${text}-`,
+      userId: 123,
+      title: text,
+      completed: false,
+    };
+
+    setList([...list, data]);
     setText("");
   };
 
