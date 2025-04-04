@@ -4,7 +4,10 @@ Repositório criado para praticar meus conhecimentos em testes no front-end.
 
 ## Ferramentas
 
-Para esses testes utilizei o **Vitest** e o **Test Library**
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Vitest](https://img.shields.io/badge/-Vitest-252529?style=for-the-badge&logo=vitest&logoColor=FCC72B)
+![Testing-Library](https://img.shields.io/badge/-TestingLibrary-%23E33332?style=for-the-badge&logo=testing-library&logoColor=white)
 
 ## Configurando ambiente
 
@@ -128,6 +131,7 @@ describe("tests of button", () => {
 1. **getByText**: procura um texto na tela, caso não queira levar em conta se tem letra minuscula ou maiúscula pode usar uma expressão regular como **getByText(/texto que deseja procurar/i)**
 1. **getByRole**: procura algo pela "função" que o elemento faz, por exemplo a role de um input text é o _textbox_. Essa função aceita um segundo parâmetro que é um objeto que podemos especificar mais informações, no caso do input podemos colocar o name ou ID dele, exemplo: **getByRole("textbox", {name: "item"})**
 1. **funções query**, por padrão caso o get não encontre o que ele já da error e falha o teste, já o query não, retorna um null e podemos usar esse retorno para verificar se o elemento estava lá ou não. Para todo get alguma coisa existe um query dele getByRole = queryByRole, getByText = queryByText.
+1. **Funções find**: assim como query também temos as funções find, por padrão o get tenta buscar a informação de imediato na tela, porem quando temos componentes que lidam com requisições o carregamento dos dados podem demorar, por esse motivo podemos utilizar find. Esse comando vai esperar um pouco até consultar o valor na tela (podemos determinar esse tempo de espera), cada função get tem sua função find assim como o tópico anterior. _é necessário usar um await antes_.
 
 ### Eventos de Usuários
 

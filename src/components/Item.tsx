@@ -19,7 +19,7 @@ const Item = ({ key, item, index, deleteItem }: ItemProps) => {
   return (
     <li
       key={key}
-      className="border-2 border-black p-2 px-5 flex justify-between items-center"
+      className="border-2 border-black p-2 px-5 flex justify-between items-center rounded-2xl"
     >
       {item.title}
 

@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import { IToDoItem } from "./components/Item";
 import ItemList from "./components/ItemList";
+import axios from "axios";
 
 function App() {
   const [list, setList] = useState<IToDoItem[]>([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then((res) => res.json())
-      .then((data) => setList(data));
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=5")
+      .then((res) => setList(res.data));
   }, []);
 
   return (
